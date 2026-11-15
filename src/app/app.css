@@ -1,0 +1,225 @@
+/* The page around the reader. Reader styles live in src/ui/reader.css. */
+
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+body {
+  margin: 0;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+main {
+  flex: 1;
+}
+main:focus {
+  outline: none;
+}
+
+.app-skip {
+  position: absolute;
+  left: 0.5em;
+  top: -5em;
+  z-index: 20;
+  padding: 0.7em 1em;
+  border: 2px solid var(--lg-fg);
+  border-radius: 0.5em;
+  background: var(--lg-bg);
+  font-weight: 700;
+}
+.app-skip:focus {
+  top: 0.5em;
+}
+
+.app-top,
+.app-foot,
+#start {
+  width: 100%;
+  max-width: 72em;
+  margin: 0 auto;
+  padding: 0 1em;
+}
+.app-top {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5em 1.5em;
+  padding-top: 0.75em;
+  padding-bottom: 0.75em;
+}
+.app-name {
+  font-size: 1.375em;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+.app-top nav {
+  display: flex;
+  gap: 0.25em;
+}
+.app-top nav a {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--lg-tap);
+  padding: 0 0.7em;
+  font-weight: 600;
+}
+
+.app-hero {
+  max-width: 46em;
+  padding: 1.5em 0 2em;
+}
+.app-hero h1 {
+  font-size: clamp(2em, 1.2em + 3.2vw, 3.4em);
+  font-weight: 800;
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+}
+.app-intro {
+  margin-top: 0.9em !important;
+  font-size: 1.1875em;
+  line-height: 1.55;
+}
+
+.app-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 1.5em;
+  align-items: start;
+}
+@media (min-width: 58em) {
+  .app-grid {
+    grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
+  }
+}
+.app-grid h2 {
+  margin-bottom: 0.6em;
+  font-size: 1.375em;
+}
+.app-grid p + p,
+.app-grid details {
+  margin-top: 0.8em;
+}
+#form label[for='text'] {
+  display: block;
+  margin-bottom: 0.35em;
+  font-weight: 600;
+}
+#text {
+  display: block;
+  width: 100%;
+  min-height: 12em;
+  padding: 0.75em 0.9em;
+  border: 2px solid var(--lg-fg);
+  border-radius: 0.5em;
+  background: var(--lg-bg);
+  font: inherit;
+  line-height: 1.5;
+  resize: vertical;
+}
+#text.app-drop {
+  border-style: dashed;
+  background: var(--lg-tint);
+}
+#text-help {
+  margin: 0.4em 0 0.9em;
+}
+/* The file input is visually hidden; its label is the button, and takes the focus ring. */
+#file:focus-visible + .lg-btn,
+.lg-row:has(#file:focus-visible) label[for='file'] {
+  outline: 3px solid var(--lg-fg);
+  outline-offset: 2px;
+}
+.app-sample {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5em 0.75em;
+  margin-top: 1em;
+  padding-top: 0.9em;
+  border-top: 1px solid var(--lg-line);
+}
+.app-sample label {
+  font-weight: 600;
+}
+.app-error {
+  margin: 0 0 0.8em !important;
+  padding: 0.6em 0.8em;
+  border: 2px solid var(--lg-fg);
+  border-left-width: 0.5em;
+  border-radius: 0.4em;
+  font-weight: 600;
+}
+.app-drag {
+  margin: 1em 0 0.4em !important;
+}
+#mark {
+  cursor: grab;
+}
+.app-steps {
+  margin: 0 0 0.8em;
+  padding-left: 1.3em;
+}
+.app-steps li + li {
+  margin-top: 0.4em;
+}
+
+.app-points {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(15em, 1fr));
+  gap: 1.5em 2em;
+  margin-top: 3em;
+  padding-top: 2em;
+  border-top: 2px solid var(--lg-fg);
+}
+.app-points h3 {
+  margin-bottom: 0.35em;
+  font-size: 1.125em;
+}
+
+.app-sources {
+  max-width: 52em;
+  margin-top: 3em;
+  padding-top: 2em;
+  border-top: 2px solid var(--lg-fg);
+}
+.app-sources h2 {
+  margin-bottom: 0.5em;
+  font-size: 1.375em;
+}
+.app-sources ul {
+  margin-top: 1em;
+  padding: 0;
+  list-style: none;
+}
+.app-sources li {
+  padding: 0.75em 0;
+  border-top: 1px solid var(--lg-line);
+}
+.app-sources li span {
+  display: block;
+}
+
+.app-foot {
+  margin-top: 3em;
+  padding-top: 1.25em;
+  padding-bottom: 2em;
+  border-top: 2px solid var(--lg-fg);
+  color: var(--lg-soft);
+  font-size: 0.9375em;
+}
+.app-foot p + p {
+  margin-top: 0.5em;
+}
+
+/* While the reader is open it owns the page. */
+body.app-reading .app-top,
+body.app-reading .app-foot {
+  display: none;
+}
+#reader {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}

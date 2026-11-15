@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Legible: find what makes a text hard to read, then fix that</title>
+    <meta
+      name="description"
+      content="Paste any text, or press the bookmarklet on any web page. Legible measures the writing, names the biggest problem in one sentence, and applies the matching fix. Nothing leaves your device."
+    />
+    <meta name="color-scheme" content="light dark" />
+    <meta name="theme-color" content="#1a1a1a" />
+    <link rel="manifest" href="manifest.webmanifest" />
+    <link rel="icon" href="icons/icon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="icons/icon-192.png" />
+    <link rel="stylesheet" href="src/ui/reader.css" />
+    <link rel="stylesheet" href="src/app/app.css" />
+    <script type="module" src="src/app/main.js"></script>
+  </head>
+  <body class="lg">
+    <a class="app-skip" href="#main">Skip to the main content</a>
+
+    <header class="app-top">
+      <p class="app-name">Legible</p>
+      <nav aria-label="On this page">
+        <a href="#sources">Sources</a>
+        <a href="https://github.com/Dynamox-DEV677/legible" rel="noopener">Code</a>
+      </nav>
+    </header>
+
+    <main id="main" tabindex="-1">
+      <section id="start" aria-labelledby="start-title">
+        <div class="app-hero">
+          <h1 id="start-title">Find what makes a text hard to read. Then fix that.</h1>
+          <p class="app-intro">
+            Most reading tools give every page the same treatment. Legible measures the writing first. It tells you the
+            biggest problem in one sentence, and it offers the fix that matches.
+          </p>
+        </div>
+
+        <div class="app-grid">
+          <form id="form" class="lg-card" novalidate>
+            <h2 id="form-title">Check a text</h2>
+            <label for="text">Paste any text here</label>
+            <textarea id="text" rows="9" spellcheck="false" aria-describedby="text-help"></textarea>
+            <p id="text-help" class="lg-soft">
+              It stays on this device. Nothing you paste is uploaded, stored or tracked.
+            </p>
+            <p id="form-error" class="app-error" role="alert" hidden></p>
+            <div class="lg-row">
+              <button type="submit" class="lg-main lg-big">Check this text</button>
+              <label class="lg-btn" for="file">Open a file</label>
+              <input id="file" class="lg-sr" type="file" accept=".txt,.md,.markdown,.html,.htm,text/plain,text/markdown,text/html" />
+            </div>
+            <div class="app-sample">
+              <label for="sample">Or try a sample</label>
+              <select id="sample">
+                <option value="">Choose one…</option>
+              </select>
+            </div>
+          </form>
+
+          <section class="lg-card" aria-labelledby="mark-title" id="bookmarklet">
+            <h2 id="mark-title">Use it on any web page</h2>
+            <p>
+              Drag this button to your bookmarks bar. Then press it on any article, and Legible opens over that page with
+              the diagnosis and the reading view.
+            </p>
+            <p class="lg-row app-drag">
+              <a id="mark" class="lg-btn lg-main lg-big" href="#bookmarklet" draggable="true">Legible this page</a>
+              <button type="button" id="mark-copy">Copy it instead</button>
+            </p>
+            <p id="mark-state" class="lg-soft" role="status"></p>
+            <details>
+              <summary>How to add it</summary>
+              <ol class="app-steps">
+                <li>Show your bookmarks bar. In most browsers that is Ctrl + Shift + B, or Cmd + Shift + B on a Mac.</li>
+                <li>Drag the “Legible this page” button onto the bar.</li>
+                <li>Open any page and press the new bookmark. Press it again, or press Escape, to go back.</li>
+              </ol>
+              <p>
+                Select part of a page first and Legible reads only that part.
+              </p>
+              <p>
+                <strong>Firefox</strong> will not save a bookmark this large. Use the
+                <a id="mark-small" href="#bookmarklet" draggable="true">small version</a> instead. It loads the reader
+                from this site, so a few sites that block outside scripts will open in a new tab.
+              </p>
+              <p>
+                <strong>On a phone</strong> bookmarklets are awkward. Copy the text and paste it above.
+              </p>
+            </details>
+            <p class="lg-soft">
+              The large bookmarklet carries all of Legible inside it. It makes no network requests at all.
+            </p>
+          </section>
+        </div>
+
+        <section class="app-points" aria-labelledby="points-title">
+          <h2 id="points-title" class="lg-sr">What Legible does</h2>
+          <div>
+            <h3>It diagnoses before it treats</h3>
+            <p>
+              Grade level, sentence length, uncommon words, paragraph length and passive voice are each measured, put
+              on one scale, and ranked. The worst one leads.
+            </p>
+          </div>
+          <div>
+            <h3>Every setting cites its source</h3>
+            <p>
+              Spacing, size, line length and contrast each name the WCAG criterion or the study behind them. Line
+              length and contrast are measured on your screen, not asserted.
+            </p>
+          </div>
+          <div>
+            <h3>It reads aloud and lights the word</h3>
+            <p>
+              Press any word to start from there. Where a voice does not report its position, Legible times it and
+              says so.
+            </p>
+          </div>
+          <div>
+            <h3>It never rewrites you</h3>
+            <p>
+              Long sentences are split at clause boundaries only. Same words, same order, and the original is always
+              one tap away.
+            </p>
+          </div>
+        </section>
+
+        <section id="sources" class="app-sources" aria-labelledby="sources-title">
+          <h2 id="sources-title">Sources</h2>
+          <p>
+            Every claim Legible makes about reading is tied to one of these. Each was read at the source before it was
+            cited. Where a number is our own judgement, the interface says so.
+          </p>
+          <ul id="source-list"></ul>
+        </section>
+      </section>
+
+      <div id="reader" hidden></div>
+
+      <noscript>
+        <p class="app-error">
+          Legible needs JavaScript. It does all of its work inside your browser, and sends nothing anywhere.
+        </p>
+      </noscript>
+    </main>
+
+    <footer class="app-foot">
+      <p>
+        No account. No tracking. No server. <span id="offline">Works offline once it has loaded.</span>
+      </p>
+      <p>
+        Open source under the MIT licence. Word list from OpenSubtitles via FrequencyWords (CC BY-SA 4.0). Syllable
+        reference from the CMU Pronouncing Dictionary. Made for Bridge The Gap Hacks, November 2026.
+      </p>
+    </footer>
+  </body>
+</html>
