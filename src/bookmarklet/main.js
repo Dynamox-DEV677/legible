@@ -48,8 +48,9 @@ function open() {
   const close = () => {
     if (reader) reader.destroy();
     host.remove();
-    html.style.setProperty('overflow', before.overflow);
-    if (!before.overflow) html.style.removeProperty('overflow');
+    if (before.overflow) html.style.setProperty('overflow', before.overflow);
+    else html.style.removeProperty('overflow');
+    if (!html.getAttribute('style')) html.removeAttribute('style'); // leave no trace on the page
     if (body) body.inert = before.inert;
     delete window[OPEN];
     if (before.focus && before.focus.focus) before.focus.focus();

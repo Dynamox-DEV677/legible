@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>A locked-down page</title>
+    <script src="/test/pages/run.js" defer></script>
+  </head>
+  <body>
+    <!--
+      A page that forbids nearly everything, to prove the bookmarklet still works on sites
+      like it. tools/serve.mjs sends this page with:
+
+        Content-Security-Policy: default-src 'none'; script-src 'self'; style-src 'none';
+          img-src 'none'; connect-src 'none'; font-src 'none';
+          require-trusted-types-for 'script'; trusted-types 'none'
+
+      So: no <style>, no style attributes, no innerHTML, no network. A real bookmark is
+      exempt from script-src. The script tag at the foot of this page stands in for it by
+      running the same built script as soon as the page has loaded.
+    -->
+    <nav>
+      <a href="#one">Home</a> <a href="#two">Products</a> <a href="#three">Pricing</a> <a href="#four">Careers</a>
+      <a href="#five">Contact</a>
+    </nav>
+    <main>
+      <h1>Terms of Service</h1>
+      <p>
+        By accessing, browsing or otherwise using the Service, you acknowledge that you have read, understood and
+        agreed to be bound by these Terms, as amended from time to time at the sole discretion of the Company, and
+        you further acknowledge that your continued use of the Service following the posting of any amendment shall
+        constitute your irrevocable acceptance of that amendment, notwithstanding any failure on the part of the
+        Company to notify you of it.<sup>[1]</sup>
+      </p>
+      <h2>Liability</h2>
+      <p>
+        The Company shall not be liable for any indirect, incidental, special, consequential or exemplary damages,
+        including without limitation damages for loss of profits, goodwill, use, data or other intangible losses;
+        this limit applies whether or not the Company has been advised of the possibility of such damages. Run
+        <code>legal --explain</code> for details.
+      </p>
+      <ul>
+        <li>You must be 18 or over.</li>
+        <li>You must not resell the Service.</li>
+      </ul>
+      <blockquote><p>Any dispute shall be resolved by arbitration. It will be held in English.</p></blockquote>
+      <aside>Related: our Privacy Policy, our Cookie Policy, our Acceptable Use Policy.</aside>
+    </main>
+    <footer>Copyright Example Corp. All rights reserved.</footer>
+    <script src="/dist/legible.page.js" defer></script>
+  </body>
+</html>

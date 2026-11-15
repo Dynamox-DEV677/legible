@@ -51,8 +51,17 @@ createServer((request, response) => {
     response.writeHead(404, { 'Content-Type': 'text/plain; charset=utf-8' }).end('Not found');
     return;
   }
+  // test/pages/strict.html is served as the most locked-down page we can describe, to
+  // prove the bookmarklet works where innerHTML, <style> and the network are all forbidden.
+  const strict = url.pathname === '/test/pages/strict.html';
   response.writeHead(200, {
     ...headers,
+    ...(strict
+      ? {
+          'Content-Security-Policy':
+            "default-src 'none'; script-src 'self'; style-src 'none'; img-src 'none'; connect-src 'none'; font-src 'none'; require-trusted-types-for 'script'; trusted-types 'none'",
+        }
+      : {}),
     'Content-Type': TYPES[extname(path)] || 'application/octet-stream',
     'Cache-Control': 'no-store',
   });
