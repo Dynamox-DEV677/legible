@@ -882,11 +882,7 @@
 }
 
 /* ---------- Preferences the reader set in their system ---------- */
-@media (prefers-reduced-motion: no-preference) {
-  .lg-text .w.lg-on {
-    transition: background-color 60ms linear;
-  }
-}
+/* The lit word changes at once, with no fade: text and background must swap together. */
 @media (prefers-contrast: more) {
   .lg .lg-card,
   .lg-issue,

@@ -177,7 +177,11 @@ const origin = location.origin;
 const SMALL =
   `javascript:(function(){var d=document,w=window,o=${JSON.stringify(origin)};if(w.__legible__){w.__legible__();return}` +
   `var s=d.createElement('script');s.src=o+'/dist/legible.page.js';s.onerror=function(){` +
-  `var t=String(w.getSelection()||'')||(d.querySelector('article,main,[role=main]')||d.body).innerText,p=w.open(o+'/%23from-page');` +
+  // The text sent is the selection, or else the article's headings and paragraphs. Menus
+  // and toolbars are lists and links, so taking only h1-h3 and p leaves them behind.
+  `var r=d.querySelector('article,main,[role=main]')||d.body,t=String(w.getSelection()||'')||` +
+  `[].map.call(r.querySelectorAll('h1,h2,h3,p'),function(e){return e.innerText.trim()}).filter(Boolean).join('\\n\\n'),` +
+  `p=w.open(o+'/%23from-page');` +
   `if(!p)return;w.addEventListener('message',function f(e){if(e.origin===o&&e.data==='legible-ready'){` +
   `p.postMessage({legible:1,title:d.title,text:t,from:location.hostname},o);w.removeEventListener('message',f)}})};` +
   `d.documentElement.appendChild(s)})()`;
@@ -233,8 +237,12 @@ if (location.hash === '#from-page' && window.opener) {
     clearTimeout(timer);
     const page = parseText(data.text, { format: 'text' });
     const title = String(data.title || '').slice(0, 200);
-    if (title && !page.title) page.blocks.unshift({ type: 'heading', level: 1, text: title });
-    page.title = page.title || title;
+    // The page's own title is more trustworthy than a heading guessed from plain text.
+    const first = page.blocks[0];
+    if (title && !(first && first.type === 'heading' && title.startsWith(first.text))) {
+      page.blocks.unshift({ type: 'heading', level: 1, text: title });
+    }
+    page.title = title || page.title;
     openReader(page, { from: data.from ? `From ${String(data.from).slice(0, 100)}.` : '' });
   });
   window.opener.postMessage('legible-ready', '*');

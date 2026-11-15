@@ -175,7 +175,12 @@ export function mountReader(container, doc, options = {}) {
     onState(state, problem) {
       clear(playButton);
       playButton.append(icon(state === 'playing' ? 'pause' : 'play'), h('span', null, state === 'playing' ? 'Pause' : state === 'paused' ? 'Resume' : 'Read aloud'));
-      if (problem) status.textContent = `Read-aloud stopped: ${problem}. Try another voice.`;
+      if (problem === 'not-allowed') {
+        // Browsers only let a page speak after the reader has pressed something on it.
+        status.textContent = 'Your browser held the voice back. Press Read aloud to start it.';
+      } else if (problem) {
+        status.textContent = `Read-aloud stopped (${problem}). Try another voice.`;
+      }
     },
     onSync(sync) {
       status.textContent = SYNC_TEXT[sync];

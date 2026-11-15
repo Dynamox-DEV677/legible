@@ -162,6 +162,7 @@ export function createSpeaker({ onWord, onState, onSync, onVoices = () => {}, la
     utterance.onerror = (event) => {
       if (mine !== ticket || event.error === 'canceled' || event.error === 'interrupted') return;
       clearTimeout(timer);
+      onWord(-1, -1); // nothing is being spoken, so nothing should stay lit
       setState('idle', event.error || 'failed');
     };
 
