@@ -18,6 +18,11 @@ It says so in one sentence. Then it offers the fix that matches.
 That is what Legible said about the GNU General Public License, read in place on gnu.org.
 It is a readability analyser with a reading view attached, not a font-size slider.
 
+![Legible open over a Wikipedia article. On the left, a panel says the page reads at Grade 13 and that its lines run to about 129 characters. On the right, the article is set in a narrow, well-spaced column.](docs/on-a-web-page.jpg)
+
+*Legible opened on Wikipedia's "Plain language" article with the bookmarklet. The article
+text is CC BY-SA 4.0.*
+
 ## Try it
 
 - **Paste a text.** Open the site, paste anything, and press *Check this text*.
@@ -67,6 +72,8 @@ tells you how many are left.
 The original is always one tap away, for the whole text or for one sentence. Legible never
 claims that a split sentence means exactly what the original did.
 
+![A sample of legal text after pressing Fix all. A notice says this is not the text as written and offers the original. One long sentence now carries a small "split" button, and uncommon words such as "irrevocable" have a dotted underline.](docs/fixed.jpg)
+
 ### Every setting cites its source
 
 | Setting | Why it is there |
@@ -89,6 +96,8 @@ the column from that.
 **Contrast.** The ratio is worked out from the two colours on your screen with the WCAG
 formula. The working is shown beside it.
 
+![The reading settings panel. Four colour themes, a measured contrast of 17.4 to 1 that passes AA and AAA, and a note naming WCAG 2.2 Success Criterion 1.4.3.](docs/settings-contrast.jpg)
+
 ### It reads aloud and lights the word
 
 Press any word and Legible reads from there, with the spoken word lit. Browsers tell a page
@@ -96,6 +105,8 @@ which word the voice has reached, but not every browser does and not every voice
 Legible does not assume. It starts by timing the voice. If the browser reports real word
 positions, it switches to those. If not, it keeps timing, and it learns the voice's true
 speed as it goes. Either way it tells you which one you are getting.
+
+![Read-aloud in progress. The sentence being read has a grey tint and the word "acknowledge" is shown white on black. The bar at the bottom says the word highlight is exact.](docs/read-aloud.jpg)
 
 ### One bookmark, any page
 

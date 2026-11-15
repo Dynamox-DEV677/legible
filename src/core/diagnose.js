@@ -290,7 +290,7 @@ export function diagnose(t, page = null) {
       headline: grade.phrase,
       audience: audience(grade.number),
       ease: t.ease,
-      easeLabel: easeLabel(t.ease),
+      easeLabel: easeLabel(Math.round(t.ease)), // the score is shown rounded, so label what is shown
       lead: issues.length ? issues[0].lead : 'Nothing stands out. Sentences are short and the words are everyday ones.',
       breakdown,
     },

@@ -94,6 +94,7 @@ export function mountReader(container, doc, options = {}) {
       tab.button.setAttribute('aria-selected', String(selected));
       tab.button.setAttribute('tabindex', selected ? '0' : '-1');
       tab.body.hidden = !selected;
+      if (selected && tab.body.parentElement) tab.body.parentElement.scrollTop = 0; // each tab opens at its top
       if (selected && focus) tab.button.focus();
     }
   };
