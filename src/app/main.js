@@ -140,7 +140,7 @@ sample.append(h('option', { value: 'readme' }, 'This project’s own README'));
 async function openSample(id, push = true) {
   if (id === 'readme') {
     try {
-      const response = await fetch('README.md');
+      const response = await fetch('dist/readme.md');
       if (!response.ok) throw new Error(String(response.status));
       openReader(parseText(await response.text(), { format: 'markdown' }), { from: 'Legible’s own README, judged by Legible.', push });
     } catch {

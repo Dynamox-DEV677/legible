@@ -4,12 +4,12 @@
 // from then on the app opens with no network at all. It only ever answers requests for
 // this site's own files, and it never sends anything anywhere.
 
-const VERSION = 'legible-4913bd931c26';
+const VERSION = 'legible-ae187b681110';
 const FILES = [
   "./",
-  "README.md",
   "dist/bookmarklet.txt",
   "dist/legible.page.js",
+  "dist/readme.md",
   "icons/icon-192.png",
   "icons/icon-512.png",
   "icons/icon.svg",

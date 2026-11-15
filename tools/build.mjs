@@ -66,10 +66,14 @@ function filesUnder(dir, keep) {
   }
   return out;
 }
+// The README is offered as a sample text ("judge the tool by its own author"). Some hosts
+// do not serve a root README, so the page reads this copy.
+writeFileSync(at('dist/readme.md'), readFileSync(at('README.md')));
+
 const files = [
   'index.html',
   'manifest.webmanifest',
-  'README.md',
+  'dist/readme.md',
   'dist/bookmarklet.txt',
   'dist/legible.page.js',
   ...filesUnder('icons', () => true),

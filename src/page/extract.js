@@ -102,6 +102,14 @@ function collect(rootNode, visible) {
     for (const child of node.childNodes) inline(child);
   };
 
+  /** A block that is nothing but one short link: "Skip to content", "Read more". */
+  const isLoneLink = (el) => {
+    const only = el.children.length === 1 ? el.firstElementChild : null;
+    if (!only || only.tagName !== 'A') return false;
+    const text = tidy(el.textContent);
+    return text.length < 60 && text === tidy(only.textContent);
+  };
+
   /** Mostly links and little else: a menu or a "related articles" list. */
   const isLinkList = (el) => {
     const total = el.textContent.trim().length;
@@ -126,7 +134,7 @@ function collect(rootNode, visible) {
         else inline(child);
         continue;
       }
-      if (isFurniture(child) || !visible(child)) continue;
+      if (isFurniture(child) || !visible(child) || isLoneLink(child)) continue;
       flush(context.type, el, context.extra);
       if (/^H[1-6]$/.test(tag)) {
         inline(child);
@@ -247,9 +255,22 @@ export function extractPage(doc, { live = true } = {}) {
   if (!blocks.some((block) => block.type !== 'heading') && article !== doc.body && doc.body) {
     ({ blocks, paragraphs } = collect(doc.body, visible));
   }
-  const firstHeading = blocks.find((block) => block.type === 'heading');
-  if (firstHeading && firstHeading.level === 1) title = firstHeading.text;
-  else if (title) blocks.unshift({ type: 'heading', level: 1, text: title });
+  // A page title usually carries the site name: "Article - Section - Site". Keep the first part.
+  const lead = title.split(/\s+[|\-–—·»:]\s+/)[0];
+  if (lead.length >= 12) title = lead;
+  // If the page already opens with that heading, use it. Otherwise put the title on top.
+  const key = (text) => text.toLowerCase().replace(/[^\p{L}\p{N}]+/gu, ' ').trim();
+  const first = blocks[0] && blocks[0].type === 'heading' ? blocks[0] : null;
+  const firstH1 = blocks.find((block) => block.type === 'heading' && block.level === 1);
+  if (firstH1) {
+    title = firstH1.text;
+  } else if (first && title && (key(title).includes(key(first.text)) || key(first.text).includes(key(title)))) {
+    first.level = 1;
+    title = first.text.length >= title.length ? first.text : title;
+    first.text = title;
+  } else if (title) {
+    blocks.unshift({ type: 'heading', level: 1, text: title });
+  }
 
   return {
     blocks,
