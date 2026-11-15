@@ -843,6 +843,16 @@
   color: var(--lg-soft);
   font-size: 0.875em;
 }
+/* On a phone the button shows its icon only, so the bar stays on one line. Its words are
+   still there for screen readers. */
+.lg .lg-more-toggle span {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
 .lg-more {
   display: none;
   flex: 1 1 100%;

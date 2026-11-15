@@ -4,7 +4,7 @@
 // from then on the app opens with no network at all. It only ever answers requests for
 // this site's own files, and it never sends anything anywhere.
 
-const VERSION = 'legible-2e7b4273283d';
+const VERSION = 'legible-98099727dfac';
 const FILES = [
   "./",
   "dist/bookmarklet.txt",

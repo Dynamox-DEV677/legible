@@ -1,6 +1,8 @@
 node_modules/
 .vercel/
 .claude/
+# Private working notes (submission text, video shot list).
+notes/
 .env*
 *.log
 .DS_Store
