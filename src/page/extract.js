@@ -14,8 +14,13 @@ const SKIP = new Set(
 const BLOCK = new Set(
   'ADDRESS ARTICLE BLOCKQUOTE CENTER DD DETAILS DIV DL DT FIELDSET FIGCAPTION H1 H2 H3 H4 H5 H6 HEADER HR LI MAIN OL P PRE SECTION SUMMARY TABLE TBODY TD TFOOT TH THEAD TR UL'.split(' '),
 );
-/** Class and id names that mark page furniture rather than the article. */
-const FURNITURE = /(?:^|[\s_-])(?:share|social|related|comments?|advert|ads?|promo|cookie|newsletter|breadcrumbs?|sidebar|menu|nav|toolbar|popup|modal)(?:$|[\s_-])/i;
+/**
+ * Class and id names that mark page furniture rather than the article: menus, share
+ * buttons, comment threads, and the reference lists, edit links and category boxes that
+ * wikis and journals put around their prose.
+ */
+const FURNITURE =
+  /(?:^|[\s_-])(?:share|social|related|comments?|advert|ads?|promo|cookie|newsletter|breadcrumbs?|sidebar|menu|nav|navbox|toolbar|popup|modal|noprint|editsection|sitesub|catlinks|reflist|references|refbegin|footnotes|hatnote|metadata|printfooter|infobox|toc)(?:$|[\s_-])/i;
 const MAIN = 'article, main, [role="main"], [itemprop="articleBody"]';
 
 const clean = (text) =>
@@ -166,7 +171,14 @@ function collect(rootNode, visible) {
 
   walk(rootNode, { type: 'paragraph' });
   flush('paragraph', rootNode.nodeType === 1 ? rootNode : null);
-  return { blocks, paragraphs };
+
+  // A heading with nothing under it is left over from a section we skipped ("References").
+  const kept = blocks.filter((block, i) => {
+    if (block.type !== 'heading' || i === 0) return true;
+    const next = blocks.slice(i + 1).find((later) => later.type !== 'heading' || later.level <= block.level);
+    return Boolean(next) && next.type !== 'heading';
+  });
+  return { blocks: kept, paragraphs };
 }
 
 const median = (values) => {
