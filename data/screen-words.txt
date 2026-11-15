@@ -1,0 +1,53 @@
+# Everyday screen words that the subtitle corpus under-counts.
+#
+# People type and read these all day, but they are rarely spoken in films, so a list
+# built from subtitles ranks them lower than a reader's real familiarity with them.
+# Without this file Legible would underline "email" and "website" as uncommon words on
+# almost every web page. The list is deliberately short, and it was written by hand for
+# this project. tools/build-data.mjs adds any entry that is not already in the top 5,000.
+email
+website
+webpage
+homepage
+password
+username
+login
+logout
+signup
+download
+upload
+online
+offline
+app
+browser
+software
+user
+settings
+delete
+scroll
+keyboard
+laptop
+smartphone
+tablet
+wifi
+folder
+menu
+icon
+digital
+update
+install
+profile
+notification
+subscribe
+subscription
+refund
+checkout
+inbox
+spam
+blog
+chat
+emoji
+podcast
+bookmark
+toolbar
+tab

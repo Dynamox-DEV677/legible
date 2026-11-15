@@ -1,0 +1,19 @@
+{
+  "name": "legible",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "A readability analyser with a renderer attached. It works out what makes a text hard to read, then fixes that.",
+  "license": "MIT",
+  "scripts": {
+    "dev": "node tools/serve.mjs",
+    "build": "node tools/build.mjs",
+    "test": "node --test \"test/*.test.js\"",
+    "check": "node tools/build.mjs && node --test \"test/*.test.js\"",
+    "analyse": "node tools/analyse.mjs",
+    "self-check": "node tools/analyse.mjs README.md"
+  },
+  "devDependencies": {
+    "esbuild": "^0.25.0"
+  }
+}
